@@ -5,10 +5,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { ApiService } from 'src/app/api.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatButtonModule} from '@angular/material/button';
-
+import { Validators } from '@angular/forms';
 
 
 
@@ -28,6 +28,7 @@ type Currency = {
     FormsModule,
     MatChipsModule,
     MatButtonModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './config.component.html',
   styleUrl: './config.component.css'
@@ -36,11 +37,9 @@ export class ConfigComponent implements OnInit{
 
   userEmail: string = null;
   currencies: Currency [] = [];
-  currencyFrom: string = '';
-  currencyTo: string = '';
   greaterThan: boolean = true;
-  targetRate: number = null;
-
+  currencyForm: FormGroup = null;
+  
   constructor(public auth: AuthService, private apiService: ApiService) {}
 
   loadExchangeRates() {
@@ -61,19 +60,27 @@ export class ConfigComponent implements OnInit{
       (profile) => (this.userEmail = JSON.stringify(profile.email, null, 2))
     );
     this.loadExchangeRates();
+    this.currencyForm = new FormGroup({
+      currencyFrom: new FormControl('',
+        [
+          Validators.required
+        ]),
+      currencyTo: new FormControl('',
+        [
+          Validators.required
+        ]),
+      targetRate: new FormControl(0,[
+        Validators.required,
+        Validators.min(0.00000000001)
+      ]),
+    });
   }
 
-  onSelect(event: any){
-    // console.log("event target id:", event.source._id)
-    // console.log("event values:", event.value)
-    console.log("from:", this.currencyFrom)
-    console.log("to:", this.currencyTo)
-  }
 
   onSubmit(){
-    console.log("from:", this.currencyFrom)
-    console.log("to:", this.currencyTo)
+    console.log("from:", this.currencyForm.value.currencyFrom)
+    console.log("to:", this.currencyForm.value.currencyTo)
     console.log("greaterThan:", this.greaterThan)
-    console.log("targetRate:", this.targetRate)
+    console.log("targetRate:", this.currencyForm.value.targetRate)
   }
 }
