@@ -11,5 +11,5 @@ import { FooterComponent } from './components/footer/footer.component';
   imports: [RouterOutlet, NavBarComponent, FooterComponent],
 })
 export class AppComponent {
-  title = 'Auth0 Angular SDK Sample';
+  title = 'Currency Exchange Rates Reminder';
 }

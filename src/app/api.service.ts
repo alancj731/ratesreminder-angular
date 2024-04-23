@@ -11,4 +11,14 @@ export class ApiService {
   ping$() {
     return this.http.get(`${config.apiUri}/api/external`);
   }
+
+  getExchangeRates$() {
+    const url = 
+    'https://api.currencybeacon.com/v1/currencies?api_key=GY8ZKYz7fd8LQWTd7OgxbseV77QAFB7N&type=fiat';
+    return this.http.get(url);
+  }
+
+  putReminder$(url: string, body: any) {
+    return this.http.put(url, body, { observe: 'response' });
+  }
 }

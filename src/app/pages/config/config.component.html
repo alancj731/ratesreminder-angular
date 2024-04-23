@@ -1,4 +1,8 @@
-<div class="config-container">
+<div *ngIf="userEmail === null">
+  <p class="mat-h1 text-center my-5">Please Login First!</p>
+</div>
+
+<div *ngIf="userEmail" class="config-container">
   <div class="email-container">
     <p class="mat-h1 text-center my-5">Set Your Target Rate Alert</p>
   </div>
@@ -63,6 +67,7 @@
       [disabled]="currencyForm.invalid"
       >
         Submit
+        
       </button>
     </div>
   </form>

@@ -9,8 +9,8 @@ import { FormsModule, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import {MatChipsModule} from '@angular/material/chips';
 import {MatButtonModule} from '@angular/material/button';
 import { Validators } from '@angular/forms';
-
-
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 
 type Currency = {
   code: string;
@@ -29,6 +29,7 @@ type Currency = {
     MatChipsModule,
     MatButtonModule,
     ReactiveFormsModule,
+    MatDialogModule,
   ],
   templateUrl: './config.component.html',
   styleUrl: './config.component.css'
@@ -40,7 +41,7 @@ export class ConfigComponent implements OnInit{
   greaterThan: boolean = true;
   currencyForm: FormGroup = null;
   
-  constructor(public auth: AuthService, private apiService: ApiService) {}
+  constructor(public dialog: MatDialog, public auth: AuthService, private apiService: ApiService) {}
 
   loadExchangeRates() {
     this.apiService.getExchangeRates$().subscribe(
@@ -54,6 +55,8 @@ export class ConfigComponent implements OnInit{
       }
     );
   }
+  
+
 
   ngOnInit() {
     this.auth.user$.subscribe(
@@ -78,9 +81,39 @@ export class ConfigComponent implements OnInit{
 
 
   onSubmit(){
-    console.log("from:", this.currencyForm.value.currencyFrom)
-    console.log("to:", this.currencyForm.value.currencyTo)
-    console.log("greaterThan:", this.greaterThan)
-    console.log("targetRate:", this.currencyForm.value.targetRate)
+    this.openConfirmDialog();
+  }
+
+  openConfirmDialog() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent,{
+      data: {
+        title: 'Confirm',
+        message: 'Are you sure to set this reminder?'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        this.setReminder();
+      }
+    });
+  }
+  setReminder() {
+    // console.log('Action setReminder performed!');
+    let url= 'http://' + window.location.hostname + ':3000/api/v1/';
+    console.log(url)
+    const body = {
+      email:  this.userEmail,
+      from:   this.currencyForm.value.currencyFrom,
+      to:     this.currencyForm.value.currencyTo,
+      target: parseFloat(this.currencyForm.value.targetRate),
+      greater:this.greaterThan
+    };
+
+    const result = this.apiService.putReminder$(url, body).subscribe(
+      (response) => {
+        console.log('status:', response.status);
+        console.log('body:', response.body);
+      }
+    );
   }
 }

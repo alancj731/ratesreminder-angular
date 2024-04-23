@@ -6,6 +6,7 @@ import { environment as env } from './environments/environment';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { provideRouter } from '@angular/router';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -26,5 +27,6 @@ bootstrapApplication(AppComponent, {
         },
       },
     },
+    provideAnimationsAsync(),
   ],
 });
