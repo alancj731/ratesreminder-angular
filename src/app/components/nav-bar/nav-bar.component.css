@@ -1,0 +1,9 @@
+@media (max-width: 600px) {
+    .nav-item.user_img {
+        display: none;
+    }
+    .navbar-nav.logout {
+        min-height: 10px !important;
+    }
+}
+
