@@ -27,7 +27,6 @@ export const environment = {
   httpInterceptor: {
     allowedList: [`${apiUri}/*`],
   },
-  apiKey: "GY8ZKYz7fd8LQWTd7OgxbseV77QAFB7N",
 };
 
 /*
