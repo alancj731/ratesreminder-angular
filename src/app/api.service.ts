@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import config from '../../auth_config.json';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class ApiService {
 
   getExchangeRates$() {
     const url = 
-    'https://api.currencybeacon.com/v1/currencies?api_key=GY8ZKYz7fd8LQWTd7OgxbseV77QAFB7N&type=fiat';
+    `https://api.currencybeacon.com/v1/currencies?api_key=${environment.apiKey}&type=fiat`;
     return this.http.get(url);
   }
 
