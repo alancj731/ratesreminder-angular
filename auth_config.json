@@ -4,7 +4,7 @@
   "authorizationParams": {
     "audience": "https://dev-xgwoc8vcayca1jkv.us.auth0.com/api/v2/"
   },
-  "apiUri": "https://localhost:3001",
-  "appUri": "https://localhost:4200",
+  "apiUri": "https://ratesreminder-angular.vercel.app:3001",
+  "appUri": "https://ratesreminder-angular.vercel.app:4200",
   "errorPath": "/error"
 }
