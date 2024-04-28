@@ -1,12 +1,9 @@
 {
-    "domain": "",
-    "clientId": "",
-    "authorizationParams": {
-      "audience": ""
-    },
-    "apiUri": "",
-    "appUri": "",
-    "errorPath": "",
-    "API_KEY": ""
-  }
-  
+    "domain":  "dev-xgwoc8vcayca1jkv.us.auth0.com",
+    "clientId": "dfYL5aidyp58f9PH67QZ3E1oR2ZorNix",
+    "authorizationParams": {"audience": "https://dev-xgwoc8vcayca1jkv.us.auth0.com/api/v2/"},
+    "apiUri": "https://ratesreminder-angular.vercel.app:3001",
+    "appUri": "https://ratesreminder-angular.vercel.app:4200",
+    "errorPath": "/error",
+    "API_KEY": "GY8ZKYz7fd8LQWTd7OgxbseV77QAFB7N"
+}
