@@ -14,9 +14,9 @@ export class ApiService {
   }
 
   getExchangeRates$() {
-    // const apiKey =process.env.API_KEY.replace(/['"]+/g, '');
-    const apiKey = "GY8ZKYz7fd8LQWTd7OgxbseV77QAFB7N"
-    // console.log("apiKey: ", apiKey);
+    const apiKey =environment.API_KEY.replace(/['"]+/g, '');
+    // const apiKey = "GY8ZKYz7fd8LQWTd7OgxbseV77QAFB7N"
+    console.log("apiKey: ", apiKey);
     const url = 
     "https://api.currencybeacon.com/v1/currencies?api_key="+apiKey+"&type=fiat";
     console.log("url: ", url);
