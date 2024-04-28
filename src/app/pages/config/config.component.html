@@ -2,7 +2,12 @@
   <p class="mat-h1 text-center my-5">Please Login First!</p>
 </div>
 
-<div *ngIf="userEmail" class="config-container">
+<div class="container" *ngIf="settingReminder">
+    <app-loading></app-loading>
+</div>
+
+
+<div *ngIf="userEmail && settingReminder===false" class="config-container">
   <div class="email-container">
     <p class="mat-h1 text-center my-5">Set Your Target Rate Alert</p>
   </div>

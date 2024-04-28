@@ -17,6 +17,7 @@ import { Validators } from '@angular/forms';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoadingComponent } from 'src/app/components/loading/loading.component';
 
 type Currency = {
   code: string;
@@ -36,6 +37,7 @@ type Currency = {
     MatButtonModule,
     ReactiveFormsModule,
     MatDialogModule,
+    LoadingComponent,
   ],
   templateUrl: './config.component.html',
   styleUrl: './config.component.css',
@@ -45,13 +47,16 @@ export class ConfigComponent implements OnInit {
   currencies: Currency[] = [];
   greaterThan: boolean = true;
   currencyForm: FormGroup = null;
+  settingReminder: boolean = false;
 
   constructor(
     private dialog: MatDialog,
     private auth: AuthService,
     private apiService: ApiService,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    // Remove the assignment of false to settingReminder
+  }
 
   loadExchangeRates() {
     this.apiService.getExchangeRates$().subscribe(
@@ -116,8 +121,10 @@ export class ConfigComponent implements OnInit {
       greater: this.greaterThan,
     };
 
+    this.settingReminder = true;
     const result = this.apiService.putReminder$(url, body).subscribe({
       next: (response) => {
+        this.settingReminder = false;
         // successful response
         let message = 'Reminder set successfully';
         if (response.status !== 200) {
@@ -129,6 +136,7 @@ export class ConfigComponent implements OnInit {
         });
       },
       error: (error) => {
+        this.settingReminder = false;
         // failed response
         this.snackBar.open('Failed to set reminder', 'Close', {
           duration: 3000,
